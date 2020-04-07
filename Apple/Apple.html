@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        }
+        .menu{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .menu-tags{
+            margin: 5px;
+            padding: 10px;
+            border: 0px;
+            font-size: 1rem;
+            border-radius: .25rem;
+            background-color: #343a40;
+            color: #fff;
+        }
+        #msg #left{
+            width: 35%;
+            margin-right: 5%;
+        }
+        #msg #right{
+            width: 60%;
+            font-size: 1.5rem;
+        }
+        #left img{
+            width: 80%;
+            margin-left: 20%;
+        }
+        #msg{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #color-div, #size-div, #calculator-div{
+            box-sizing: border-box;
+            margin: 0 5%;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+        #calculator-div{
+            font-size: 4rem;
+        }
+        .color-btn, .size-btn{
+            /* padding: 20px; */
+            background-color: #fff;
+            width: 200px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 10px;
+            /* padding: 30px 50px 20px; */
+            border-radius: .35rem;
+        }
+        .size-btn{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .color-btn img{
+            width: 50px;
+            position: relative;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <button class="menu-tags" id="iphone">iPhone</button>
+        <button class="menu-tags" id="ipad">iPad</button>
+        <button class="menu-tags" id="mac">Mac</button> 
+    </div>
+  
+
+    <div id="msg">
+        <div id="left"></div>
+        <div id="right"></div>
+    </div>
+
+
+    <script>
+        var products = {
+            iphone:{
+                background: 'pic/iphone.jpg',
+                color:{
+                    white:{name:'白色', pic:'pic/iphone-white.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-white-201909?wid=96&amp;hei=96&amp;fmt=jpeg&amp;qlt=80&amp;op_usm=0.5,0.5&amp;.v=1566845577171'},
+                    red:{name:'紅色', pic:'pic/iphone-red.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-red-201909?wid=96&amp;hei=96&amp;fmt=jpeg&amp;qlt=80&amp;op_usm=0.5,0.5&amp;.v=1566845577171'},
+                    black:{name:'黑色', pic:'pic/iphone-black.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-black-201909?wid=96&amp;hei=96&amp;fmt=jpeg&amp;qlt=80&amp;op_usm=0.5,0.5&amp;.v=1566845577171'}
+                },
+                storage:{G64 :24900,G128:26900,G256:30400}
+                
+            },
+            ipad:{
+                background: 'pic/ipad.png',
+                color:{
+                    spacegray:{name:'太空灰色', pic:'pic/ipad-spacegray.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-spacegray-201903?wid=102&amp;hei=102&amp;fmt=png-alpha&amp;.v=1552422652805'},
+                    silver:{name:'銀色', pic:'pic/ipad-silver.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-silver-201903?wid=102&amp;hei=102&amp;fmt=png-alpha&amp;.v=1552422655664'},
+                    gold:{name:'金色', pic:'pic/ipad-gold.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-gold-201903?wid=102&amp;hei=102&amp;fmt=png-alpha&amp;.v=1552422653869'}
+                },
+                storage:{G32 :10900, G128:13900}
+
+            },
+            mac:{
+                background: 'pic/mac.png',
+                color:{
+                    spacegray:{name:'太空灰色', pic:'pic/mac-spacegray.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-spacegray-201903?wid=102&amp;hei=102&amp;fmt=png-alpha&amp;.v=1552422652805'},
+                    silver:{name:'銀色', pic:'pic/mac-silver.png', url:'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/finish-silver-201903?wid=102&amp;hei=102&amp;fmt=png-alpha&amp;.v=1552422655664'},
+                },
+                storage:{G256:51300, G512:57300, TB1:63300, TB2:75300}
+            }
+        };
+
+        //  var iphone = products.iphone;
+        // console.log(`${p01.id}, ${p01.color}, ${p01.price}, ${p01.storage}, ${p01.network}, ${p01.pic}, ${p01.url}`);
+        // console.log(products.iphone.white);
+        var msg = document.getElementById('msg');
+        var iphone = document.getElementById('iphone');
+        var left = document.getElementById('left');
+        var right = document.getElementById('right');
+        var select = document.getElementsByClassName('menu-tags');
+
+        for(let i = 0; i < select.length; i++){
+            select[i].addEventListener('click', function(){
+            while(left.hasChildNodes()){
+                left.removeChild(left.firstChild);
+            }
+            while(right.hasChildNodes()){
+                right.removeChild(right.firstChild);
+            }
+            
+            var choice = products[select[i].id];
+            var pic = document.createElement('img');    
+            // console.log(products[select[i].id]);
+            pic.src = choice.background;
+            left.appendChild(pic);
+            
+             // ---------顏色---------
+            var colorTitle = document.createElement('h2');
+            colorTitle.innerText = '顏色';
+            right.appendChild(colorTitle);
+
+            var colorDiv = document.createElement('div');
+            colorDiv.id = 'color-div';
+            right.appendChild(colorDiv);
+
+
+            for(let b = 0; b < Object.keys(choice.color).length; b++){
+                let colorKey = Object.keys(choice.color)[b];
+
+                var btn = document.createElement('button');
+                btn.classList = 'color-btn';
+                colorDiv.appendChild(btn);
+
+                btn.addEventListener('click', function(){
+                    pic.src = choice.color[colorKey].pic;
+                });
+
+                var colorPic = document.createElement('img');
+               
+                colorPic.src = choice.color[colorKey].url;
+                btn.appendChild(colorPic);
+
+                var span = document.createElement('span');
+                span.innerText =  choice.color[colorKey].name;
+                btn.appendChild(span);
+            }
+
+
+            // ---------價格試算---------
+            var calculation = document.createElement('h2');
+            var calculator = document.createElement('div');
+            calculator.id = 'calculator-div';
+
+            // ---------規格---------
+            var sizeTitle = document.createElement('h2');
+            sizeTitle.innerText = '規格';
+            right.appendChild(sizeTitle);
+
+            var sizeDiv = document.createElement('div');
+            sizeDiv.id = 'size-div';
+            right.appendChild(sizeDiv);
+
+            for(let b = 0; b < Object.keys(choice.storage).length; b++){
+                var sizeBtn = document.createElement('button');
+                sizeBtn.classList = 'size-btn';
+                sizeDiv.appendChild(sizeBtn);
+
+
+                let key = Object.keys(choice.storage)[b];
+                var storage = document.createElement('span');
+                storage.innerText = key;
+                sizeBtn.appendChild(storage);
+
+                var price = document.createElement('span');
+                price.innerText = `NT$${choice.storage[key]}`;
+                sizeBtn.appendChild(price);
+
+                sizeBtn.addEventListener('click', function(){
+                    calculator.innerText = `NT$${choice.storage[key]}`;
+                });
+            }
+            
+           // ---------價格試算---------
+            calculation.innerText = '價格試算';
+            right.appendChild(calculation);
+            right.appendChild(calculator);
+            
+        });
+
+        }
+        
+
+        function creatList(){
+            console.log("GOOD");
+
+        }
+        
+    </script>
+
+
+</body>
+</html>
