@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .msg{
+            /* height: 30px; */
+            /* width: 400px; */
+            border: 1px solid #333;
+            text-align: center;
+            margin: 20px;
+            padding: 50px 100px;
+        }
+        #createNumber{
+            width: 70px;
+            height: 20px;
+            background-color: #07f;
+            color: #fff;
+            text-align: center;
+            border: #fff;
+        }
+        #inputNumber{
+            width: 140px;
+            margin: 5px;
+        }
+        .button{
+            display: flex;
+            flex-direction: column;
+        }
+        .num, .word{
+            /* margin: 10px; */
+            width: 30px;
+            height: 30px;
+            background-color: #000;
+            color: #fff;
+            border:1px solid #fff;
+        }
+        #X{
+            color: #f00;
+        }
+        #V{
+            color: #0f0;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="msg">
+            <label id="min">0</label>
+            ~
+            <label id="max">100</label>
+        </div>
+        <button id="createNumber">產生數字</button>
+        <input type="text" id="inputNumber">
+        <div class="button">
+            <div class="row">
+                <button class="num">1</button>
+                <button class="num">2</button>
+                <button class="num">3</button>
+            </div>
+            <div class="row">
+                <button class="num">4</button>
+                <button class="num">5</button>
+                <button class="num">6</button>
+            </div>
+           <div class="row">
+                <button class="num">7</button>
+                <button class="num">8</button>
+                <button class="num">9</button>
+           </div>
+           <div class="row">
+                <button class="word" id="X">X</button>
+                <button class="num">0</button>
+                <button class="word" id="V">V</button>   
+           </div>
+            
+        </div>
+        <label for="" id="ans"></label>
+    </div>
+    
+
+    <script>
+
+        var btnRandom = document.getElementById('createNumber');
+        var ans = document.getElementById('ans');
+        var ansNumber;
+        btnRandom.addEventListener('click', function(){
+            ansNumber = Math.floor((Math.random() * 99)+1);
+            ans.innerHTML = ansNumber;
+        });
+        var btnNumber = document.getElementsByClassName('num');
+        var inputNumber = document.getElementById('inputNumber');
+        for(let i = 0; i < btnNumber.length; i++){
+            btnNumber[i].addEventListener('click', function(){
+                 inputNumber.value += btnNumber[i].innerHTML;
+            });
+        }
+        var clear = document.getElementById('X');
+        clear.addEventListener('click', function(){
+            inputNumber.value = '';
+        });
+
+        var min = document.getElementById('min');
+        var max = document.getElementById('max');
+        var check = document.getElementById('V');
+        check.addEventListener('click', function(){
+            if(inputNumber.value == ansNumber){
+                ans.innerHTML = '恭喜答對了!';
+            }
+            else if(inputNumber.value > ansNumber){
+                max.innerHTML = inputNumber.value;
+            }
+            else if(inputNumber.value < ansNumber){
+                min.innerHTML = inputNumber.value;
+            }
+            inputNumber.value = '';
+        });
+        
+    </script>
+</body>
+</html>
